@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.lang.StringIndexOutOfBoundsException;
 //----------------
 
 public class Histogram {
@@ -46,6 +47,7 @@ public class Histogram {
 		String keyIn;
 		Scanner fileIn;
 		String fileString = "";
+		char [] letters;
 		HashMap<String,Integer> tracker = new HashMap<String, Integer>();
 		
 		
@@ -68,18 +70,42 @@ public class Histogram {
 			//Testing String concatenation
 			//println(fileString); //Successful test
 			//--------------------------
-			
 			//Set frame above occurrence marker
 			println("Char    Occurrence");
 			
+			//Convert string to char array and sort
+			letters = fileString.toCharArray();
+			for(int i = 0; i < letters.length-1; i++) {
+				for (int j = i+1; j < letters.length; j++) {
+					if ((int)letters[i] > (int)letters[j]) {
+						char temp = letters[j];
+						letters[j] = letters[i];
+						letters[i] = temp;
+					}
+				}
+			}
+			
+			//Check sorting GOOD
+//			for (int i = 0; i < letters.length; i++) {
+//				System.out.print(letters[i]);
+//			}
+			
+			
 			//Parse string and determine unique letters and occurrence
+			String repeat = "";
+			
 			for (int i = 0; i < fileString.length(); i++) {
 				int occurrence = 0;
+				
 				for (int j = i; j < fileString.length(); j++) {
 					if (fileString.charAt(i) == fileString.charAt(j)) {
 						occurrence += 1;
+						repeat = repeat+fileString.charAt(i);
 					}
 				}
+				
+				
+				
 				println(" " + fileString.charAt(i) + "       " + occurrence);
 			}
 
