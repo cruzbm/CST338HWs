@@ -55,25 +55,34 @@ public class Histogram {
 		
 		//Attempt to open file
 		try {
+			
 			//Note: file must exist outside of src
 			fileIn = new Scanner(new FileInputStream(keyIn));
 			
+			//Fill string with text in file by each line of data in text file
 			while(fileIn.hasNextLine()) {
 				String tempStr = fileIn.nextLine();
 				fileString = fileString + tempStr;
 			}
+			
 			//Testing String concatenation
-			println(fileString);
+			//println(fileString); //Successful test
 			//--------------------------
 			
-			if (fileIn.hasNext()) {
-				String temp = fileIn.nextLine();
-				if (tracker.containsKey(temp)) {
-					tracker.put(temp, tracker.get(temp)+1);
+			//Set frame above occurrence marker
+			println("Char    Occurrence");
+			
+			//Parse string and determine unique letters and occurrence
+			for (int i = 0; i < fileString.length(); i++) {
+				int occurrence = 0;
+				for (int j = i; j < fileString.length(); j++) {
+					if (fileString.charAt(i) == fileString.charAt(j)) {
+						occurrence += 1;
+					}
 				}
+				println(" " + fileString.charAt(i) + "       " + occurrence);
 			}
 
-			println("Char-----Occurrence");
 			//Need to increment value for each key 'a-k' 
 			for (int i = 0; i < tracker.size(); i++) {
 				String temp = fileIn.nextLine();
