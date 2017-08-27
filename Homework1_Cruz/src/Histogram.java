@@ -45,7 +45,7 @@ public class Histogram {
 		Scanner keyboard;
 		String keyIn;
 		Scanner fileIn;
-		String fileString;
+		String fileString = "";
 		HashMap<String,Integer> tracker = new HashMap<String, Integer>();
 		
 		
@@ -58,10 +58,13 @@ public class Histogram {
 			//Note: file must exist outside of src
 			fileIn = new Scanner(new FileInputStream(keyIn));
 			
-			//Verify line-
-			fileString = fileIn.nextLine();
+			while(fileIn.hasNextLine()) {
+				String tempStr = fileIn.nextLine();
+				fileString = fileString + tempStr;
+			}
+			//Testing String concatenation
 			println(fileString);
-			//------------
+			//--------------------------
 			
 			if (fileIn.hasNext()) {
 				String temp = fileIn.nextLine();
@@ -71,12 +74,17 @@ public class Histogram {
 			}
 
 			println("Char-----Occurrence");
-//			for (int i = 0; i < 11; i++) {
-//				if () {
-//				
-//				}
-//			}
-			
+			//Need to increment value for each key 'a-k' 
+			for (int i = 0; i < tracker.size(); i++) {
+				String temp = fileIn.nextLine();
+				if (tracker.containsKey(temp)) {
+					tracker.replace(temp, tracker.get(temp)+1);
+				}
+			}
+			//Print individual letters
+			for (int i = 0; i < tracker.size(); i++) {
+				;
+			}
 		}
 		catch (FileNotFoundException e) {
 			println("File not found.");
@@ -84,7 +92,7 @@ public class Histogram {
 		}
 		
 		
-		
+		println("");
 		println("============== Vertical Bar Graph ===============");
 		println("");
 		//println("Success");
