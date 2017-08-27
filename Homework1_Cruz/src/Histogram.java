@@ -12,29 +12,42 @@
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 //----------------
 
 public class Histogram {
+	
 
 	//Faster println call
 	public static void println(String line) {
 		System.out.println(line);
 	}
 	
-	//Processor Methods-----
-	public static int counter(String str, String seeker) {
-		return 0;
+	//Build HashMap to hold all letters and default 0 instances of values.
+	public static void buildHashMap(HashMap<String, Integer> tr) {
+		tr.put("a", 0);
+		tr.put("b", 0);
+		tr.put("c", 0);
+		tr.put("d", 0);
+		tr.put("e", 0);
+		tr.put("f", 0);
+		tr.put("g", 0);
+		tr.put("h", 0);
+		tr.put("i", 0);
+		tr.put("j", 0);
+		tr.put("k", 0);
 	}
 	
-	public static void printFrame() {
-		
-	}
 	
+	//----------------------
 	public static void main(String[] args) {
 		//Initialize variables
 		Scanner keyboard;
 		String keyIn;
-		Scanner fileIn = null;
+		Scanner fileIn;
+		String fileString;
+		HashMap<String,Integer> tracker = new HashMap<String, Integer>();
+		
 		
 		System.out.print("Input filename: ");
 		keyboard = new Scanner(System.in);
@@ -44,12 +57,36 @@ public class Histogram {
 		try {
 			//Note: file must exist outside of src
 			fileIn = new Scanner(new FileInputStream(keyIn));
+			
+			//Verify line-
+			fileString = fileIn.nextLine();
+			println(fileString);
+			//------------
+			
+			if (fileIn.hasNext()) {
+				String temp = fileIn.nextLine();
+				if (tracker.containsKey(temp)) {
+					tracker.put(temp, tracker.get(temp)+1);
+				}
+			}
+
+			println("Char-----Occurrence");
+//			for (int i = 0; i < 11; i++) {
+//				if () {
+//				
+//				}
+//			}
+			
 		}
 		catch (FileNotFoundException e) {
 			println("File not found.");
 			System.exit(0);
 		}
 		
+		
+		
+		println("============== Vertical Bar Graph ===============");
+		println("");
 		//println("Success");
 		
 	}
