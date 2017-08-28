@@ -25,18 +25,18 @@ public class Histogram {
 	}
 	
 	//Build HashMap to hold all letters and default 0 instances of values.
-	public static void buildHashMap(HashMap<String, Integer> tr) {
-		tr.put("a", 0);
-		tr.put("b", 0);
-		tr.put("c", 0);
-		tr.put("d", 0);
-		tr.put("e", 0);
-		tr.put("f", 0);
-		tr.put("g", 0);
-		tr.put("h", 0);
-		tr.put("i", 0);
-		tr.put("j", 0);
-		tr.put("k", 0);
+	public static void buildHashMap(HashMap<Character, Integer> tr) {
+		tr.put('a', 0);
+		tr.put('b', 0);
+		tr.put('c', 0);
+		tr.put('d', 0);
+		tr.put('e', 0);
+		tr.put('f', 0);
+		tr.put('g', 0);
+		tr.put('h', 0);
+		tr.put('i', 0);
+		tr.put('j', 0);
+		tr.put('k', 0);
 	}
 	
 	
@@ -48,7 +48,8 @@ public class Histogram {
 		Scanner fileIn;
 		String fileString = "";
 		char [] letters;
-		HashMap<String,Integer> tracker = new HashMap<String, Integer>();
+		int [] count;
+		HashMap<Character,Integer> tracker = new HashMap<Character, Integer>();
 		
 		
 		System.out.print("Input filename: ");
@@ -67,10 +68,10 @@ public class Histogram {
 				fileString = fileString + tempStr;
 			}
 			
-			//Testing String concatenation
-			//println(fileString); //Successful test
-			//--------------------------
-			//Set frame above occurrence marker
+//			Testing String concatenation
+//			println(fileString); //Successful test
+//			--------------------------
+//			Set frame above occurrence marker
 			println("Char    Occurrence");
 			
 			//Convert string to char array and sort
@@ -85,41 +86,22 @@ public class Histogram {
 				}
 			}
 			
+//			Determine number of unique letters and occurrance
+			buildHashMap(tracker);
+			for (int i = 0; i < letters.length-1; i++) {
+				for (int j = i+1; j< letters.length; j++) {
+					if (letters[i] == letters[j]) {
+						tracker.put(letters[i], tracker.get(letters[i]) + 1);
+					}
+				}
+			} 
+			
 			//Check sorting GOOD
 //			for (int i = 0; i < letters.length; i++) {
 //				System.out.print(letters[i]);
 //			}
 			
 			
-			//Parse string and determine unique letters and occurrence
-			String repeat = "";
-			
-			for (int i = 0; i < fileString.length(); i++) {
-				int occurrence = 0;
-				
-				for (int j = i; j < fileString.length(); j++) {
-					if (fileString.charAt(i) == fileString.charAt(j)) {
-						occurrence += 1;
-						repeat = repeat+fileString.charAt(i);
-					}
-				}
-				
-				
-				
-				println(" " + fileString.charAt(i) + "       " + occurrence);
-			}
-
-			//Need to increment value for each key 'a-k' 
-			for (int i = 0; i < tracker.size(); i++) {
-				String temp = fileIn.nextLine();
-				if (tracker.containsKey(temp)) {
-					tracker.replace(temp, tracker.get(temp)+1);
-				}
-			}
-			//Print individual letters
-			for (int i = 0; i < tracker.size(); i++) {
-				;
-			}
 		}
 		catch (FileNotFoundException e) {
 			println("File not found.");
