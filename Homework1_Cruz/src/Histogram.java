@@ -69,6 +69,7 @@ public class Histogram {
 		char [] letters;
 		int [] count = new int[256];
 		String cutString;
+		int maxCount = 0;
 		HashMap<Character,Integer> tracker = new HashMap<Character, Integer>();
 		
 		
@@ -126,6 +127,13 @@ public class Histogram {
 				System.out.println(cutString.charAt(i) + "       " + count[i]);
 			}
 			
+			maxCount = 0;
+			for (int i = 0; i < cutString.length();i++) {
+				if (count[i] > maxCount) {
+					maxCount = count[i];
+				}
+			}
+			
 		}
 		catch (FileNotFoundException e) {
 			println("File not found.");
@@ -135,7 +143,12 @@ public class Histogram {
 		
 		println("");
 		println("============== Vertical Bar Graph ===============");
-		println("");
+		for (int i = maxCount; i > 0; i--) {
+			System.out.println("|  " + i + " |");
+		}
+		System.out.println("=================================================");
+		System.out.print("| No.|");
+		
 		//println("Success");
 		
 	}
