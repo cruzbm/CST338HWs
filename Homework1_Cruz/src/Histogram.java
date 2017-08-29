@@ -24,6 +24,25 @@ public class Histogram {
 		System.out.println(line);
 	}
 	
+	//Delete repeats in string for use in counting occurrences
+	public static String deleteRepeats(String str) {
+		int [] count = new int[256];
+		
+		for (int i = 0 ; i < str.length(); i++) {
+			char c = str.charAt(i);
+			count[c]++;
+		}
+		
+		StringBuilder strBld = new StringBuilder(count.length);
+		for (int i = 0; i < count.length; i++) {
+			if (count[i] > 0) {
+				strBld.append((char)i)
+;			}
+		}
+		return strBld.toString();
+	}
+	
+	
 	//Build HashMap to hold all letters and default 0 instances of values.
 	public static void buildHashMap(HashMap<Character, Integer> tr) {
 		tr.put('a', 0);
@@ -48,7 +67,8 @@ public class Histogram {
 		Scanner fileIn;
 		String fileString = "";
 		char [] letters;
-		int [] count;
+		int [] count = new int[256];
+		String cutString;
 		HashMap<Character,Integer> tracker = new HashMap<Character, Integer>();
 		
 		
@@ -71,6 +91,8 @@ public class Histogram {
 //			Testing String concatenation
 //			println(fileString); //Successful test
 //			--------------------------
+			
+			
 //			Set frame above occurrence marker
 			println("Char    Occurrence");
 			
@@ -86,21 +108,23 @@ public class Histogram {
 				}
 			}
 			
-//			Determine number of unique letters and occurrance
-			buildHashMap(tracker);
-			for (int i = 0; i < letters.length-1; i++) {
-				for (int j = i+1; j< letters.length; j++) {
-					if (letters[i] == letters[j]) {
-						tracker.put(letters[i], tracker.get(letters[i]) + 1);
+			
+			cutString = deleteRepeats(fileString);
+			
+			//Fill count array according to letter appearance
+			for (int i = 0; i < cutString.length(); i++) {
+				for (int j = 0; j < letters.length;j ++) {
+					if (cutString.charAt(i) == letters[j]) {
+						count[i]++;
+						//tracker.put(letters[j], tracker.get(letters[j]) + 1);
 					}
 				}
-			} 
+			}
 			
-			//Check sorting GOOD
-//			for (int i = 0; i < letters.length; i++) {
-//				System.out.print(letters[i]);
-//			}
-			
+			//Print Char and Occurrence data
+			for (int i = 0; i < cutString.length(); i++) {
+				System.out.println(cutString.charAt(i) + "       " + count[i]);
+			}
 			
 		}
 		catch (FileNotFoundException e) {
