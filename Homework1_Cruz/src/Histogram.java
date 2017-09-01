@@ -111,13 +111,14 @@ public class Histogram {
 			
 			
 			cutString = deleteRepeats(fileString);
+			buildHashMap(tracker);
 			
 			//Fill count array according to letter appearance
 			for (int i = 0; i < cutString.length(); i++) {
 				for (int j = 0; j < letters.length;j ++) {
 					if (cutString.charAt(i) == letters[j]) {
 						count[i]++;
-						//tracker.put(letters[j], tracker.get(letters[j]) + 1);
+						//Increment value in the hash map			
 					}
 				}
 			}
