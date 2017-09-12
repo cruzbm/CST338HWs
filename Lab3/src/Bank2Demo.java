@@ -21,8 +21,6 @@ public class Bank2Demo {
         // Create an account with the name (= "Bob"), account number (= 2000),
         // account type (= 1), and balance (= 0).
         testBank.openAccount();
-
-        System.out.println("test");
         
         // Display the current account(s) information on the screen.
         testBank.printAllAccounts();

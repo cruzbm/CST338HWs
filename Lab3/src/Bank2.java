@@ -4,15 +4,17 @@ import java.util.InputMismatchException;
 
 public class Bank2 {
 	
-	private Account2 []accounts = new Account2[3];
+	private Account2 []accounts;
 	private String bankName;
-	private int numOfAccounts = 0;
+	private int numOfAccounts;
 	
 	public Bank2(){
 	}
 	
 	public void setBankName(String name) {
 		this.bankName = name;
+		this.numOfAccounts = 0;
+		this.accounts = new Account2[3];
 	}
 	
 	public boolean openAccount() {
@@ -58,20 +60,23 @@ public class Bank2 {
 				return false;
 			}
 			
-			if (numOfAccounts != 0) {
-				for (int i = 0; i < numOfAccounts; i++) {
+			if (this.numOfAccounts != 0) {
+				for (int i = 0; i < this.numOfAccounts; i++) {
 					if (accounts[i] != null) {
 						if (accounts[i].getNum() == accountNum) {
 							return false;
 						}
 					}
 				}
-				for (int i = 0; i < numOfAccounts; i++) {
+				for (int i = 0; i < this.numOfAccounts; i++) {
 					if (this.accounts[i] == null) {
 						this.accounts[i] = new Account2(name, accountNum, accountType, accountBal);
 						this.numOfAccounts++;
 						System.out.println("Created.");
 						return true;
+					}
+					else {
+						continue;
 					}
 				}
 			}
