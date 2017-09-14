@@ -155,7 +155,10 @@ public class Bank {
 			if (customers[i] == null) {
 				continue;
 			}
-			if (accounts[i].)
+			if (customers[i].getSSN() == SSN) {
+				customers[i].setNewAddr(addr);
+				return true;
+			}
 		}
 		return false;
 	}

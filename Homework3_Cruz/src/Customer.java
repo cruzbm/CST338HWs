@@ -39,6 +39,13 @@ public class Customer {
 	}
 	
 	//---------------------------------
+	//ADDRESS SETTER
+	//---------------------------------
+	public void setNewAddr(String addr) {
+		this.address = addr;
+	}
+	
+	//---------------------------------
 	//PRINT CUSTOMER
 	//---------------------------------
 	public void printCustomer() {

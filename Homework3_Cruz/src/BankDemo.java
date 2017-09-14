@@ -31,5 +31,8 @@ public class BankDemo
 
     System.out.println("\n========== Updating Balance ==========");
     System.out.println(csumbBank.updateBalance(2000, 1000.00));
+    
+    System.out.println("\n========== Updating Address ==========");
+    System.out.println(csumbBank.updateAddress(88888, "329 Monterey St"));
   }
 }
