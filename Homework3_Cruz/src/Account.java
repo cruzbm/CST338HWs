@@ -42,6 +42,27 @@ public class Account {
 	}
 	
 	//---------------------------------
+	//ACCOUNT TYPE GETTER
+	//---------------------------------
+	public String getType() {
+		if (accType == 1) {
+			return "Checking Account";
+		}
+		else if (accType == 2) {
+			return "Savings Account";
+		}
+		else
+			return "Account Type Invalid";
+	}
+	
+	//---------------------------------
+	//ACCOUNT BALANCE GETTER
+	//---------------------------------
+	public void setNewBal(double newBal) {
+		this.accBalance = newBal;
+	}
+	
+	//---------------------------------
 	//PRINT ACCOUNT
 	//---------------------------------
 	public void printAccount() {

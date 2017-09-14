@@ -25,6 +25,20 @@ public class Customer {
 	}
 	
 	//---------------------------------
+	//ADDRESS GETTER
+	//---------------------------------
+	public String getAddress() {
+		return address;
+	}
+	
+	//---------------------------------
+	//NAME GETTER
+	//---------------------------------
+	public String getName() {
+		return name;
+	}
+	
+	//---------------------------------
 	//PRINT CUSTOMER
 	//---------------------------------
 	public void printCustomer() {
