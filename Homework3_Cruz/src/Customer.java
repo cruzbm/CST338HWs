@@ -1,3 +1,13 @@
+/* 
+ * Title: Customer.java
+ * Abstract: This class is the Customer Class built in conjuction with
+ * Bank.java and Account.java for a functioning bank account.
+ * Customer.java contains all methods meant to enable methods from Bank.java.
+ * Author: Brandon Cruz
+ * ID: 8309
+ * Date: 9/14/2017
+ */
+
 
 public class Customer {
 	private String name;

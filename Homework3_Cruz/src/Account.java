@@ -1,4 +1,13 @@
-
+/* 
+ * Title: Account.java
+ * Abstract: This class is the Account Class built in conjuction with
+ * Customer.java and Bank.java for a functioning bank account.
+ * Account.java contains all account methods necessary for properly running
+ * functions in Bank.java
+ * Author: Brandon Cruz
+ * ID: 8309
+ * Date: 9/14/2017
+ */
 
 public class Account {
 	private int accNum;

@@ -1,3 +1,12 @@
+/* 
+ * Title: Bank.java
+ * Abstract: This class is the Bank Class built in conjuction with
+ * Customer.java and Account.java for a functioning bank account.
+ * Author: Brandon Cruz
+ * ID: 8309
+ * Date: 9/14/2017
+ */
+
 
 import java.util.Scanner;
 
