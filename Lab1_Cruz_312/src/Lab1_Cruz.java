@@ -53,7 +53,7 @@ public class Lab1_Cruz {
 		}
 		System.out.println("Output Plaintext: " + pt);
 		return pt;
-	} // close encrypt
+	} // close decrypt
 	
 	
 	public static void main(String []args) {
