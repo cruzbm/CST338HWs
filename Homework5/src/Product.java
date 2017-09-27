@@ -27,4 +27,12 @@ public class Product {
 		this.name = newName;
 		return true;
 	}
+	
+	public String toString() {
+		return ("No. " + productNum + ": " + name + ", $");
+	}
+	
+	public int getNum() {
+		return productNum;
+	}
 }
