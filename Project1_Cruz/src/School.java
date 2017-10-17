@@ -27,6 +27,12 @@ public class School {
 	
 	public School(String name) {
 		this.name = name;
+		numOfInstructors = 0;
+		numOfCourses = 0;
+		numOfStudents = 0;
+		instructors = new HashMap<Integer, Instructor>();
+		courses = new HashMap<Integer, Course>();
+		students = new HashMap<Integer, Student>();
 	}
 	
 	public void readData(String fileIn) {
@@ -43,12 +49,12 @@ public class School {
 		try {
 			Scanner readIn = new Scanner(new FileInputStream(fileIn));
 			
-			int temp = Integer.parseInt(readIn.nextLine()); //nextLine() limiter
 			StringTokenizer st1;
 			String[] sTempArr;
 			String sTemp;
 			
-			
+			//--READ IN INSTRUCTORS--//
+			int temp = Integer.parseInt(readIn.nextLine()); //nextLine() limiter
 			for (int i = 0 ; i < temp; i++) {
 				sTempArr = new String[4]; //Array to hold broken up string
 				sTemp = readIn.nextLine(); //Holds line of unbroken string from file
@@ -56,28 +62,76 @@ public class School {
 				st1 = new StringTokenizer(sTemp, ","); //Tokenizer to break up string at every ','
 				
 				int j = 0;
+				String s = st1.nextToken(); //FIRST TOKEN IS ID OF INSTRUCTOR
+				String s1 = s;
+				int instructorId = Integer.parseInt(s);
 				while (st1.hasMoreTokens()) { //create new instructor object to add to hashmap of instructors with key of int from String
-					String s = st1.nextToken();
-					sTempArr[j] = s;
+					sTempArr[j] = s1;
+					System.out.println(sTempArr[j]);
+					s1 = st1.nextToken();
 					j++;
+					
+					if (j == 3) { //Makes sure phone number is read in before while loop breaks
+						sTempArr[j] = s1;
+					}
+				} 
+				//System.out.println(sTempArr[0] + "," + sTempArr[1] + ", " + sTempArr[2] + "," + sTempArr[3]); //Only reading in all values 
+				instructors.put(instructorId, new Instructor(sTempArr[0], sTempArr[1], sTempArr[2], sTempArr[3]));
+				
+			}
+			
+			//--READ IN COURSES--//
+			temp = Integer.parseInt(readIn.nextLine());
+			for (int i = 0; i < temp; i++) {
+				sTempArr = new String[4]; //Array to hold broken up string for courses
+				sTemp = readIn.nextLine();
+				readCourses.add(sTemp);
+				st1 = new StringTokenizer(sTemp, ",");
+				
+				int j = 0;
+				String s = st1.nextToken();
+				String s1 = s;
+				int courseId = Integer.parseInt(s);
+				while (st1.hasMoreTokens()) {
+					sTempArr[j] = s1;
+					s1 = st1.nextToken();
+					j++;
+					if (j == 3) {
+						sTempArr[3] = s1;
+					}
 				}
+				//System.out.println(sTempArr[0] + "," + sTempArr[1] + ", " + sTempArr[2] + "," + sTempArr[3]);
+				courses.put(courseId,  new Course(sTempArr[0], sTempArr[1], sTempArr[2], sTempArr[3]));
 			}
 			
-			
+			//--READ IN STUDENTS--//
 			temp = Integer.parseInt(readIn.nextLine());
 			for (int i = 0; i < temp; i++) {
-				sTempArr = new String[4]; //Array to hold broken up string for 
-				readCourses.add(readIn.nextLine());
+				sTempArr = new String[4]; //Array to hold broken up string for courses
+				sTemp = readIn.nextLine();
+				readCourses.add(sTemp);
+				st1 = new StringTokenizer(sTemp, ",");
+				
+				int j = 0;
+				String s = st1.nextToken();
+				String s1 = s;
+				int studentId = Integer.parseInt(s);
+				while (st1.hasMoreTokens()) {
+					sTempArr[j] = s1;
+					s1 = st1.nextToken();
+					j++;
+					if (j == 1) {
+						sTempArr[1] = s1;
+					}
+				}
+				//System.out.println(sTempArr[0] + "," + sTempArr[1]);
+				students.put(studentId,  new Student(sTempArr[0], sTempArr[1]));
 			}
 			
-			temp = Integer.parseInt(readIn.nextLine());
-			for (int i = 0; i < temp; i++) {
-				readStudents.add(readIn.nextLine());
-			}
-			
-			//CHECKING FOR END OF FILE
+			//CHECKING FOR END OF FILE -- DONE READING IN FILE
 			if (!readIn.hasNextLine()) {
-				System.out.println("End of File Reached");
+				//System.out.println("End of File Reached");
+				System.out.println("Done.");
 			}
 			
 		}
@@ -90,7 +144,19 @@ public class School {
 	}
 	
 	public void schoolInfo() {
-		
+		System.out.println("School Name: " + name);
+		System.out.println("Instructors Information");
+		for (int e : instructors.keySet()) {
+			System.out.println("\t" + instructors.get(e).getName());
+		}
+		System.out.println("Course Information");
+		for (int e: courses.keySet()) {
+			System.out.println("\t" + courses.get(e).getTitle());
+		}
+		System.out.println("Student Information");
+		for (int e: students.keySet()) {
+			System.out.println("\t" + students.get(e).getName());
+		}
 	}
 	
 	public boolean addInstructor() {
