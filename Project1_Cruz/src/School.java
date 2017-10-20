@@ -18,18 +18,12 @@ import java.util.NoSuchElementException;
 public class School {
 	
 	private String name;
-	private int numOfCourses;
 	private HashMap<Integer, Course> courses;
-	private int numOfInstructors;
 	private HashMap<Integer, Instructor> instructors;
-	private int numOfStudents;
 	private HashMap<Integer, Student> students;
 	
 	public School(String name) {
 		this.name = name;
-		numOfInstructors = 0;
-		numOfCourses = 0;
-		numOfStudents = 0;
 		instructors = new HashMap<Integer, Instructor>();
 		courses = new HashMap<Integer, Course>();
 		students = new HashMap<Integer, Student>();
@@ -40,8 +34,8 @@ public class School {
 		ArrayList<String> readCourses = new ArrayList<String>();
 		ArrayList<String> readStudents = new ArrayList<String>();
 		
-		int tempNum;
-		String tempString;
+		//int tempNum;
+		//String tempString;
 		
 		//READ IN INTRUCTORS
 		//READ IN COURSES
@@ -67,7 +61,6 @@ public class School {
 				int instructorId = Integer.parseInt(s);
 				while (st1.hasMoreTokens()) { //create new instructor object to add to hashmap of instructors with key of int from String
 					sTempArr[j] = s1;
-					System.out.println(sTempArr[j]);
 					s1 = st1.nextToken();
 					j++;
 					
@@ -75,9 +68,13 @@ public class School {
 						sTempArr[j] = s1;
 					}
 				} 
-				//System.out.println(sTempArr[0] + "," + sTempArr[1] + ", " + sTempArr[2] + "," + sTempArr[3]); //Only reading in all values 
-				instructors.put(instructorId, new Instructor(sTempArr[0], sTempArr[1], sTempArr[2], sTempArr[3]));
-				
+				if (instructors.containsKey(instructorId)) {
+					System.out.println("Instructor info reading failed -- Employee ID " + instructorId + " already exists.");
+				}
+				else {
+					//System.out.println(sTempArr[0] + "," + sTempArr[1] + ", " + sTempArr[2] + "," + sTempArr[3]); //Only reading in all values 
+					instructors.put(instructorId, new Instructor(Integer.parseInt(sTempArr[0]), sTempArr[1], sTempArr[2], sTempArr[3]));
+				}
 			}
 			
 			//--READ IN COURSES--//
@@ -101,7 +98,13 @@ public class School {
 					}
 				}
 				//System.out.println(sTempArr[0] + "," + sTempArr[1] + ", " + sTempArr[2] + "," + sTempArr[3]);
-				courses.put(courseId,  new Course(sTempArr[0], sTempArr[1], sTempArr[2], sTempArr[3]));
+				if (courses.containsKey(courseId)){
+					System.out.println("Course Number " + courseId + " already exists.");
+				}
+				else{
+					courses.put(courseId,  new Course(Integer.parseInt(sTempArr[0]), sTempArr[1], Integer.parseInt(sTempArr[2]), sTempArr[3]));
+				
+				}
 			}
 			
 			//--READ IN STUDENTS--//
@@ -125,7 +128,13 @@ public class School {
 					}
 				}
 				//System.out.println(sTempArr[0] + "," + sTempArr[1]);
-				students.put(studentId,  new Student(sTempArr[0], sTempArr[1]));
+				if (students.containsKey(studentId)) {
+					System.out.println("Student info reading failed -- Student ID " + studentId + " already exists.");
+				}
+				else {
+					
+					students.put(studentId,  new Student(Integer.parseInt(sTempArr[0]), sTempArr[1]));
+				}
 			}
 			
 			//CHECKING FOR END OF FILE -- DONE READING IN FILE
@@ -159,39 +168,154 @@ public class School {
 		}
 	}
 	
-	public boolean addInstructor() {
-		return false;
+	public boolean addInstructor(int id, String name, String email, String phone) {
+		if(instructors.containsKey(id)){
+			return false;
+		}
+		else
+		{
+			instructors.put(id, new Instructor(id, name, email, phone));
+			return true;
+		}
 	}
 	
-	public boolean assignInstructor() {
-		return false;
+	public boolean assignInstructor(int cId, int iId) {
+		if (instructors.containsKey(iId)) {
+			if (courses.containsKey(cId)) {
+				instructors.get(iId).assignCourse(courses.get(cId));
+				courses.get(cId).assignInstructor(instructors.get(iId));
+				return true;
+			}
+			else {
+				System.out.println("Course " + cId + " does not exist.");
+				return false;
+			}
+		}
+		else {
+			System.out.println("Instructor " + iId + " does not exist.");
+			return false;
+		}
 	}
 	
-	public boolean register() {
-		return false;
+	public boolean register(int cId, int sId) {
+		if (!students.containsKey(sId)) {
+			System.out.println("Student " + sId + " does not exist.");
+			return false;
+		}
+		if (students.get(sId).currentCourses(cId)) {
+			System.out.println("Student " + sId + " (" + students.get(sId).getName() + ") is already enrolled in " + cId);
+			return false;
+		}
+		else {
+			students.get(sId).registerNewCourse(cId, courses.get(cId));
+			return true;
+		}
 	}
 	
-	public void putScore() {
+	public boolean putScore(int cId, int sId, double score) {
+		if (!students.containsKey(sId)) {
+			System.out.println("Student " + sId + " does not exist.");
+			return false;
+		}
+		if (!students.get(sId).currentCourses(cId)) {
+			System.out.println("Student " + sId + " (" + name + ") is not enrolled in " + cId);
+			return false;
+		}
+		else {
+			students.get(sId).inputScore(cId, score);
+			return true;
+		}
 		
 	}
 	
-	public boolean addCourse() {
+	public boolean addCourse(int id, String title, int enrolled, String room) {
+		if (courses.containsKey(id)) {
+			System.out.println("Course addition failed – Course number " + id + " already used.");
+			return false;
+		}
+		else {
+			courses.put(id, new Course(id, title, enrolled, room));
+			return true;
+		}
+	}
+	
+	public boolean unRegister(int cId, int sId) {
+		if (!students.containsKey(sId)) {
+			System.out.println("Student " + sId + " does not exist.");
+			return false;
+		}
+		if (!courses.containsKey(cId)) {
+			System.out.println("Course " + cId + "does not exist.");
+			return false;
+		}
+		
+		students.get(sId).unregisterCourse(cId);
+		return true;
+	}
+	
+	public boolean searchByEmail(String email) {
+		System.out.println("Search Key: " + email);
+		for (int e : instructors.keySet()) {
+			if (instructors.get(e).getEmail().equals(email)) {
+				instructors.get(e).toString(email); //Overloaded toString to print instructor information without email
+				return true;
+			}
+		}
 		return false;
 	}
 	
-	public boolean deleteCourse() {
+	public boolean searchByPhone(String lastFour) {
+		System.out.println("Search Key: " + lastFour);
+		for (int e : instructors.keySet()) {
+			if (instructors.get(e).getLastFourPhone().equals(lastFour)) {
+				System.out.println(instructors.get(e).toString()); //Prints all instructor information -- NOT PRINTING CORRECTLY
+				return true;
+			}
+		}
+		System.out.println(lastFour + " is not found.");
 		return false;
 	}
 	
-	public boolean unRegister() {
+	public void courseInfo() {
+		System.out.println("Number of Courses: " + courses.size());
+		for (int e : courses.keySet()) {
+			System.out.print("\t" + courses.get(e).getId() + ": " + courses.get(e).getEnrolled() + " enrolled. \n");
+		}
+	}
+	
+	public void courseInfo(int cId) {
+		if (!courses.containsKey(cId)) {
+			System.out.println("Course " + cId + " does not exist.");
+			return;
+		}
+		
+		System.out.println("Course Number: " + cId);
+		System.out.println("Instructor: " + courses.get(cId).getInstructor());
+		System.out.println("Course Title: " + courses.get(cId).getTitle());
+		System.out.println("Total Enrolled: " + courses.get(cId).getEnrolled());
+		System.out.print("Course Average: ");
+		for (int e: students.keySet()) {
+			// GET AVERAGE SCORE FOR THE GIVEN COURSE
+		}
+	}
+	
+	public Course getCourse(int cId) { 
+		return courses.get(cId);
+	}
+	
+	public boolean deleteCourse(int cId) {
+		if (courses.containsKey(cId)) {
+			for (int e : students.keySet())
+			{
+				if (students.get(e).currentCourses(cId)) {
+					System.out.println("Course deletion failed -- Student(s) enrolled in course.");
+					return false;
+				}
+			}
+			
+			courses.remove(cId);
+			return true;
+		}
 		return false;
-	}
-	
-	public String searchByEmail(String email) {
-		return "";
-	}
-	
-	public String searchByPhone(String lastFour) {
-		return "";
 	}
 }
